@@ -27,9 +27,16 @@ public class Keychain<Item: KeychainItem> {
 		}
 	}
 
-	public func fetch(_ query: Item.Query) throws -> Item? {
+	public func fetch(_ q: Item.Query) throws -> Item? {
 		var rawItem: CFTypeRef?
-		let status = SecItemCopyMatching(query.data as CFDictionary, &rawItem)
+
+		var query = q.data
+		query[kSecMatchLimit] = kSecMatchLimitOne
+		query[kSecReturnAttributes] = true
+		query[kSecReturnData] = true
+		query[kSecAttrSynchronizable] = kSecAttrSynchronizableAny
+
+		let status = SecItemCopyMatching(query as CFDictionary, &rawItem)
 
 		guard status != errSecItemNotFound
 		else { return nil }

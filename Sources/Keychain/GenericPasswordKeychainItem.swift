@@ -4,6 +4,7 @@ public struct GenericPasswordKeychainItem {
 	public struct Query: KeychainQuery {
 		public var data: [CFString : Any] {
 			[
+				kSecClass: GenericPasswordKeychainItem.classIdentifier,
 				kSecAttrAccount: account,
 			]
 		}
@@ -55,9 +56,6 @@ extension GenericPasswordKeychainItem: KeychainItem {
 	public static let classIdentifier = kSecClassGenericPassword
 
 	public init(data: KeychainData) throws {
-		guard data[kSecClass] as? String == Self.classIdentifier as String
-		else { throw KeychainError.invalidClass(data[safe: kSecClass] as CFString?) }
-
 		guard
 			let account = data[kSecAttrAccount] as? String,
 			let password = data[kSecValueData] as? Data
