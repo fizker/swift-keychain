@@ -10,4 +10,7 @@ public enum KeychainError: Error {
 	///
 	/// The bundled value is the type of class that were attempted to be parsed.
 	case requiredKeysMissing(CFString)
+
+	/// Thrown for any unknown error that might come from the `Keychain` APIs.
+	case unknownError(OSStatus)
 }

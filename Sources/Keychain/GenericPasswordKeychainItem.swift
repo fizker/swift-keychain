@@ -1,6 +1,20 @@
 import Foundation
 
 public struct GenericPasswordKeychainItem {
+	public struct Query: KeychainQuery {
+		public var data: [CFString : Any] {
+			[
+				kSecAttrAccount: account,
+			]
+		}
+
+		public init(account: String) {
+			self.account = account
+		}
+
+		public var account: String
+	}
+
 	public init(account: String, password: Data) {
 		self.account = account
 		self.password = password
@@ -9,32 +23,32 @@ public struct GenericPasswordKeychainItem {
 		modificationDate = nil
 	}
 
-	var account: String
-	var password: Data
+	public var account: String
+	public var password: Data
 
-	let creationDate: Date?
-	let modificationDate: Date?
+	public let creationDate: Date?
+	public let modificationDate: Date?
 
-	var service: String?
+	public var service: String?
 
 	// (macOS only)
 	//var access:
 	//var accessControl:
 
 	// (iOS; also macOS if kSecAttrSynchronizable specified)
-	var accessGroup: String?
+	public var accessGroup: String?
 	// (iOS; also macOS if kSecAttrSynchronizable specified)
-	var accessible: String?
+	public var accessible: String?
 
-	var description: String?
-	var comment: String?
-	var creator: UInt?
-	var type: UInt?
-	var label: String?
-	var isInvisible: Bool = false
-	var isNegative: Bool?
-	var isSynchronizable: Bool = false
-	var genericData: Data?
+	public var description: String?
+	public var comment: String?
+	public var creator: UInt?
+	public var type: UInt?
+	public var label: String?
+	public var isInvisible: Bool = false
+	public var isNegative: Bool?
+	public var isSynchronizable: Bool = false
+	public var genericData: Data?
 }
 
 extension GenericPasswordKeychainItem: KeychainItem {
@@ -69,9 +83,12 @@ extension GenericPasswordKeychainItem: KeychainItem {
 		genericData = data[safe: kSecAttrGeneric]
 	}
 
+	public var query: Query {
+		.init(account: account)
+	}
+
 	public var keychainData: KeychainData {
 		var v = [
-			kSecAttrAccount: account,
 			kSecValueData: password,
 		] as [CFString : Any]
 			//kSecAttrAccess: access,
