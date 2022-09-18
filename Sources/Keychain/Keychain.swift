@@ -15,7 +15,9 @@ public class Keychain<Item: KeychainItem> {
 	}
 
 	public func update(_ item: Item) throws {
-		let status = SecItemUpdate(item.query, item.keychainData)
+		var data = item.query.data
+		data[kSecAttrSynchronizable] = kSecAttrSynchronizableAny
+		let status = SecItemUpdate(data as CFDictionary, item.keychainData)
 
 		switch status {
 		case errSecSuccess:
@@ -52,7 +54,10 @@ public class Keychain<Item: KeychainItem> {
 	}
 
 	public func delete(_ query: Item.Query) throws {
-		let status = SecItemDelete(query.data as CFDictionary)
+		var data = query.data
+		data[kSecAttrSynchronizable] = kSecAttrSynchronizableAny
+		let status = SecItemDelete(data as CFDictionary)
+
 		switch status {
 		case errSecSuccess, errSecItemNotFound:
 			break
