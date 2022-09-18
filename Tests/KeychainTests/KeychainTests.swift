@@ -27,7 +27,7 @@ final class KeychainTests: XCTestCase {
 		/*@START_MENU_TOKEN@*/throw XCTSkip("Not implemented")/*@END_MENU_TOKEN@*/
 
 		let keychain = Keychain<GenericPasswordKeychainItem>()
-		let item = try keychain.fetch(.init(account: "foo", creator: nil))
+		let item = try keychain.fetch(.init(account: "foo"))
 	}
 
 	func test__delete__itemExists__itemIsRemoved() throws {

@@ -11,7 +11,7 @@ public struct GenericPasswordKeychainItem {
 			return v
 		}
 
-		public init(account: String, creator: UInt?) {
+		public init(account: String, creator: UInt? = nil) {
 			self.account = account
 			self.creator = creator
 		}
