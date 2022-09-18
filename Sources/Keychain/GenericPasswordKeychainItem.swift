@@ -3,17 +3,21 @@ import Foundation
 public struct GenericPasswordKeychainItem {
 	public struct Query: KeychainQuery {
 		public var data: [CFString : Any] {
-			[
+			var v = [
 				kSecClass: GenericPasswordKeychainItem.classIdentifier,
 				kSecAttrAccount: account,
-			]
+			] as [CFString : Any]
+			v[safe: kSecAttrCreator] = creator
+			return v
 		}
 
-		public init(account: String) {
+		public init(account: String, creator: UInt?) {
 			self.account = account
+			self.creator = creator
 		}
 
 		public var account: String
+		public var creator: UInt?
 	}
 
 	public init(account: String, password: Data) {
@@ -82,7 +86,7 @@ extension GenericPasswordKeychainItem: KeychainItem {
 	}
 
 	public var query: Query {
-		.init(account: account)
+		.init(account: account, creator: creator)
 	}
 
 	public var keychainData: KeychainData {
