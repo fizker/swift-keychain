@@ -27,20 +27,20 @@ final class KeychainTests: XCTestCase {
 		/*@START_MENU_TOKEN@*/throw XCTSkip("Not implemented")/*@END_MENU_TOKEN@*/
 
 		let keychain = Keychain<GenericPasswordKeychainItem>()
-		let item = try keychain.fetch(.init(account: "foo"))
+		let item = try keychain.fetch(.init(account: "foo", creator: nil))
 	}
 
 	func test__delete__itemExists__itemIsRemoved() throws {
 		/*@START_MENU_TOKEN@*/throw XCTSkip("Not implemented")/*@END_MENU_TOKEN@*/
 
 		let keychain = Keychain<GenericPasswordKeychainItem>()
-		let item = try keychain.delete(.init(account: "foo"))
+		try keychain.delete(.init(account: "foo", password: "123".data(using: .utf8)!))
 	}
 
 	func test__delete__itemDoesNotExist__doesNotThrow() throws {
 		/*@START_MENU_TOKEN@*/throw XCTSkip("Not implemented")/*@END_MENU_TOKEN@*/
 
 		let keychain = Keychain<GenericPasswordKeychainItem>()
-		let item = try keychain.delete(.init(account: "foo"))
+		try keychain.delete(.init(account: "foo", password: "123".data(using: .utf8)!))
 	}
 }
