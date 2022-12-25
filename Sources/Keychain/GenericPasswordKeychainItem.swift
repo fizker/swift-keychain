@@ -98,9 +98,7 @@ extension GenericPasswordKeychainItem: KeychainItem {
 		v[safe: kSecAttrAccessGroup] = accessGroup
 		if let accessible {
 			v[safe: kSecAttrAccessible] = accessible
-			if #available(iOS 13.0, *) {
-				v[safe: kSecUseDataProtectionKeychain] = true
-			}
+			v[safe: kSecUseDataProtectionKeychain] = true
 		}
 		v[safe: kSecAttrDescription] = description
 		v[safe: kSecAttrComment] = comment
